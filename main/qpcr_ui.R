@@ -42,13 +42,13 @@ fluidRow(
                          label = h4('绘图样式'),
                          choices = list('柱状图' = 'bar',
                                         '箱线图' = 'box'),
-                         selected = 'box'),
+                         selected = 'bar'),
              # 是否绘图
              selectInput('bar_style',
                          label = h4('误差线'),
                          choices = list('标准差' = 'sd',
                                         '标准误' = 'se'),
-                         selected = 'sd'),
+                         selected = 'se'),
              # 点击提交
              actionButton('submit_qpcr',
                           label = h4('点击提交'),

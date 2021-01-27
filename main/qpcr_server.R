@@ -236,12 +236,12 @@ plot_res_qpcr <- eventReactive(input$submit_qpcr,{
     }
     
     if (input$color == 'FALSE') {
-      if (length(unique(res$基因名称 > 1))) {
+      if (length(unique(res$目的基因)) > 1) {
         if (input$plot_style == 'box') {
           p = ggplot(res, aes(处理,fold_change)) +
             geom_boxplot(width = 0.5) +
             geom_text(aes(处理, max(fold_change)*1.1, label = significance)) +
-            facet_grid(. ~ 基因名称) +
+            facet_grid(.~ 目的基因) +
             theme_bw()
         }else{
           res$temp = paste(res$目的基因, res$处理, sep = '_')
@@ -251,7 +251,7 @@ plot_res_qpcr <- eventReactive(input$submit_qpcr,{
           if (input$bar_style == 'sd') {
             p = ggplot(res,aes(处理, mean)) +
               geom_bar(stat = 'identity', width = 0.5) +
-              facet_grid(. ~ 基因名称) +
+              facet_grid(. ~ 目的基因) +
               geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width = 0.2) +
               geom_text(aes(处理, max(mean + sd)*1.1, label = significance)) +
               geom_hline(yintercept = (max(res$mean) + max(res$sd))*1.2, color = 'white') +
@@ -260,7 +260,7 @@ plot_res_qpcr <- eventReactive(input$submit_qpcr,{
           }else{
             p = ggplot(res,aes(处理, mean)) +
               geom_bar(stat = 'identity', width = 0.5) +
-              facet_grid(. ~ 基因名称) +
+              facet_grid(. ~ 目的基因) +
               geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.2) +
               geom_text(aes(处理, max(mean + se)*1.1, label = significance)) +
               geom_hline(yintercept = (max(res$mean) + max(res$se))*1.2, color = 'white') +
@@ -300,12 +300,12 @@ plot_res_qpcr <- eventReactive(input$submit_qpcr,{
         }
       }
     }else{
-      if (length(unique(res$基因名称 > 1))) {
+      if (length(unique(res$目的基因)) > 1) {
         if (input$plot_style == 'box') {
           p = ggplot(res, aes(处理,fold_change, fill = 处理)) +
             geom_boxplot(width = 0.5) +
             geom_text(aes(处理, max(fold_change)*1.1, label = significance)) +
-            facet_grid(. ~ 基因名称) +
+            facet_grid(. ~ 目的基因) +
             scale_fill_aaas() +
             theme_bw()
         }else{
@@ -316,7 +316,7 @@ plot_res_qpcr <- eventReactive(input$submit_qpcr,{
           if (input$bar_style == 'sd') {
             p = ggplot(res,aes(处理, mean, fill = 处理)) +
               geom_bar(stat = 'identity', width = 0.5) +
-              facet_grid(. ~ 基因名称) +
+              facet_grid(. ~ 目的基因) +
               geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), width = 0.2) +
               geom_text(aes(处理, max(mean + sd)*1.1, label = significance)) +
               geom_hline(yintercept = (max(res$mean) + max(res$sd))*1.2, color = 'white') +
@@ -326,7 +326,7 @@ plot_res_qpcr <- eventReactive(input$submit_qpcr,{
           }else{
             p = ggplot(res,aes(处理, mean, fill = 处理)) +
               geom_bar(stat = 'identity', width = 0.5) +
-              facet_grid(. ~ 基因名称) +
+              facet_grid(. ~ 目的基因) +
               geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.2) +
               geom_text(aes(处理, max(mean + se)*1.1, label = significance)) +
               geom_hline(yintercept = (max(res$mean) + max(res$se))*1.2, color = 'white') +
@@ -377,17 +377,15 @@ plot_res_qpcr <- eventReactive(input$submit_qpcr,{
       labs(x = input$qpcr_fig_x_axis,
            y = input$qpcr_fig_y_axis,
            title = input$qpcr_fig_title) +
-      
+      theme_bw(base_family = "STKaiti") +
       theme(legend.position = 'none',
-            legend.text = element_text(color = 'black',size = 10, 
-                                       family = 'Arial', face = 'plain'),
+            legend.text = element_text(color = 'black',size = 10),
             panel.background = element_blank(),
             panel.grid = element_blank(),
-            axis.text = element_text(color = 'black',size = 10, 
-                                     family = 'Arial', face = 'plain'),
-            axis.title = element_text(color = 'black',size = 10, 
-                                      family = 'Arial', face = 'plain'),
-            axis.ticks = element_line(color = 'black'))
+            axis.text = element_text(color = 'black',size = 10),
+            axis.title = element_text(color = 'black',size = 10),
+            axis.ticks = element_line(color = 'black'),
+            axis.ticks.length.x = unit(0,'cm'))
     
     p_qpcr <- p
     

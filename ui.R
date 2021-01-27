@@ -12,7 +12,8 @@ library(shinyWidgets)
 library(ggsci)
 library(Cairo)
 library(multcomp)
-
+library(extrafont)
+loadfonts()
 
 #########################################定义选卡###############################
 if (TRUE) {
